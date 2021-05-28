@@ -1,7 +1,8 @@
 import 'package:despesas_pessoais/components/adaptatives/adaptative_button.dart';
 import 'package:despesas_pessoais/components/adaptatives/adaptative_datepicker.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:intl/intl.dart';
 import 'adaptatives/adaptative_textfield.dart';
 
 class TransactionForm extends StatefulWidget {
@@ -15,12 +16,16 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final _titleController = TextEditingController();
-  final _valueController = TextEditingController();
+  final _valueController =
+      MoneyMaskedTextController(decimalSeparator: ',', thousandSeparator: '.');
   DateTime _selectedDate = DateTime.now();
 
   _submitForm() {
     final title = _titleController.text;
-    final value = double.tryParse(_valueController.text) ?? 0.0;
+    final value = double.tryParse(NumberFormat.currency(locale: 'pt_BR')
+            .parse(_valueController.text)
+            .toString()) ??
+        0.0;
 
     if (title.isEmpty || value <= 0 || _selectedDate == null) {
       return;

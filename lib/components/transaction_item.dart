@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:despesas_pessoais/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -51,7 +49,8 @@ class _TransactionItemState extends State<TransactionItem> {
             padding: const EdgeInsets.all(6),
             child: FittedBox(
               child: Text(
-                'R\$${widget.item.value}',
+                NumberFormat.simpleCurrency(locale: 'pt_BR')
+                    .format(widget.item.value),
                 style: TextStyle(color: Colors.white),
               ),
             ),
